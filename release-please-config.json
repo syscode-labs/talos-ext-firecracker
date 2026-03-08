@@ -1,0 +1,66 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "package-name": "talos-ext-firecracker",
+      "include-v-in-tag": true,
+      "changelog-path": "CHANGELOG.md",
+      "extra-files": [
+        {
+          "type": "yaml",
+          "path": "manifest.yaml",
+          "jsonpath": "$.metadata.version"
+        }
+      ],
+      "changelog-sections": [
+        {
+          "type": "feat",
+          "section": "Features"
+        },
+        {
+          "type": "fix",
+          "section": "Bug Fixes"
+        },
+        {
+          "type": "perf",
+          "section": "Performance"
+        },
+        {
+          "type": "deps",
+          "section": "Dependencies"
+        },
+        {
+          "type": "chore",
+          "section": "Miscellaneous",
+          "hidden": false
+        },
+        {
+          "type": "docs",
+          "section": "Miscellaneous",
+          "hidden": false
+        },
+        {
+          "type": "build",
+          "section": "Miscellaneous",
+          "hidden": false
+        },
+        {
+          "type": "ci",
+          "section": "Miscellaneous",
+          "hidden": false
+        },
+        {
+          "type": "refactor",
+          "section": "Miscellaneous",
+          "hidden": false
+        },
+        {
+          "type": "test",
+          "section": "Miscellaneous",
+          "hidden": false
+        }
+      ]
+    }
+  }
+}

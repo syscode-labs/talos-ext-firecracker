@@ -22,3 +22,9 @@ repos:
     rev: v2.12.1b3
     hooks:
       - id: hadolint
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.13.9
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]

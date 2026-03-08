@@ -131,7 +131,7 @@ create_talos_cluster() {
 
   talosctl cluster create qemu --name "$CLUSTER_NAME"
 
-  talosctl kubeconfig --nodes 127.0.0.1 --endpoints 127.0.0.1 "$WORKDIR/kubeconfig"
+  talosctl kubeconfig "$WORKDIR/kubeconfig"
   export KUBECONFIG="$WORKDIR/kubeconfig"
 
   kubectl wait --for=condition=Ready node --all --timeout=10m

@@ -108,6 +108,16 @@ ensure_docker_buildx() {
   exit 1
 }
 
+ensure_qemu() {
+  if command -v qemu-system-x86_64 >/dev/null 2>&1 || command -v qemu-kvm >/dev/null 2>&1; then
+    return
+  fi
+
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update
+  apt-get install -y --no-install-recommends qemu-system-x86 qemu-utils
+}
+
 build_extension_image() {
   local tag="local/talos-ext-firecracker:ci"
   echo "Building extension image from $EXT_REPO_DIR"
@@ -119,7 +129,7 @@ create_talos_cluster() {
   # Best-effort cleanup from prior runs.
   talosctl cluster destroy --name "$CLUSTER_NAME" >/dev/null 2>&1 || true
 
-  talosctl cluster create docker --name "$CLUSTER_NAME"
+  talosctl cluster create qemu --name "$CLUSTER_NAME"
 
   talosctl kubeconfig --nodes 127.0.0.1 --endpoints 127.0.0.1 "$WORKDIR/kubeconfig"
   export KUBECONFIG="$WORKDIR/kubeconfig"
@@ -140,6 +150,7 @@ install_talosctl
 install_kubectl
 ensure_docker
 ensure_docker_buildx
+ensure_qemu
 build_extension_image
 create_talos_cluster
 write_runtime_env

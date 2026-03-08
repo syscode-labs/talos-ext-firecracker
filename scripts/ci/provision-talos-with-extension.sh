@@ -131,7 +131,12 @@ create_talos_cluster() {
 
   talosctl cluster create qemu --name "$CLUSTER_NAME"
 
-  talosctl kubeconfig "$WORKDIR/kubeconfig"
+  if [ ! -f "$HOME/.kube/config" ]; then
+    echo "Expected kubeconfig at $HOME/.kube/config after cluster create" >&2
+    exit 1
+  fi
+
+  cp "$HOME/.kube/config" "$WORKDIR/kubeconfig"
   export KUBECONFIG="$WORKDIR/kubeconfig"
 
   kubectl wait --for=condition=Ready node --all --timeout=10m

@@ -115,7 +115,7 @@ ensure_qemu() {
 
   export DEBIAN_FRONTEND=noninteractive
   apt-get update
-  apt-get install -y --no-install-recommends qemu-system-x86 qemu-utils
+  apt-get install -y --no-install-recommends qemu-system-x86 qemu-utils ovmf
 }
 
 build_extension_image() {

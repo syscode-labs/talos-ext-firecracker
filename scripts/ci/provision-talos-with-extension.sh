@@ -64,6 +64,23 @@ ensure_docker() {
   exit 1
 }
 
+ensure_docker_buildx() {
+  if docker buildx version >/dev/null 2>&1; then
+    return
+  fi
+
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get update
+  apt-get install -y --no-install-recommends docker-buildx-plugin || true
+
+  if docker buildx version >/dev/null 2>&1; then
+    return
+  fi
+
+  echo "docker buildx is required for BuildKit-based extension build" >&2
+  exit 1
+}
+
 build_extension_image() {
   local tag="local/talos-ext-firecracker:ci"
   echo "Building extension image from $EXT_REPO_DIR"
@@ -95,6 +112,7 @@ ENV
 install_talosctl
 install_kubectl
 ensure_docker
+ensure_docker_buildx
 build_extension_image
 create_talos_cluster
 write_runtime_env

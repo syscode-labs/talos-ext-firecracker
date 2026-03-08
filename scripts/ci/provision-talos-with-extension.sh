@@ -119,7 +119,7 @@ create_talos_cluster() {
   # Best-effort cleanup from prior runs.
   talosctl cluster destroy --name "$CLUSTER_NAME" >/dev/null 2>&1 || true
 
-  talosctl cluster create docker --name "$CLUSTER_NAME" --wait-timeout 15m
+  talosctl cluster create docker --name "$CLUSTER_NAME"
 
   talosctl kubeconfig --nodes 127.0.0.1 --endpoints 127.0.0.1 "$WORKDIR/kubeconfig"
   export KUBECONFIG="$WORKDIR/kubeconfig"

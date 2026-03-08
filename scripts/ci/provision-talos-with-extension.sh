@@ -64,6 +64,27 @@ ensure_docker() {
   exit 1
 }
 
+install_buildx_fallback() {
+  local arch bx_arch bx_version plugin_dir
+  arch="$(uname -m)"
+  case "$arch" in
+    x86_64) bx_arch="amd64" ;;
+    aarch64|arm64) bx_arch="arm64" ;;
+    *) echo "Unsupported arch for buildx: $arch" >&2; exit 1 ;;
+  esac
+
+  bx_version="$(curl -fsSL https://api.github.com/repos/docker/buildx/releases/latest | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -n1)"
+  if [ -z "$bx_version" ]; then
+    echo "Could not resolve latest docker/buildx release" >&2
+    exit 1
+  fi
+
+  plugin_dir="$HOME/.docker/cli-plugins"
+  mkdir -p "$plugin_dir"
+  curl -fsSL "https://github.com/docker/buildx/releases/download/${bx_version}/buildx-${bx_version}.linux-${bx_arch}" -o "$plugin_dir/docker-buildx"
+  chmod +x "$plugin_dir/docker-buildx"
+}
+
 ensure_docker_buildx() {
   if docker buildx version >/dev/null 2>&1; then
     return
@@ -72,6 +93,12 @@ ensure_docker_buildx() {
   export DEBIAN_FRONTEND=noninteractive
   apt-get update
   apt-get install -y --no-install-recommends docker-buildx-plugin || true
+
+  if docker buildx version >/dev/null 2>&1; then
+    return
+  fi
+
+  install_buildx_fallback
 
   if docker buildx version >/dev/null 2>&1; then
     return

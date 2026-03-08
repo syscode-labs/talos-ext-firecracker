@@ -67,7 +67,7 @@ ensure_docker() {
 build_extension_image() {
   local tag="local/talos-ext-firecracker:ci"
   echo "Building extension image from $EXT_REPO_DIR"
-  docker build --build-arg BUILDPLATFORM=linux/amd64 -t "$tag" "$EXT_REPO_DIR"
+  DOCKER_BUILDKIT=1 docker build --build-arg BUILDPLATFORM=linux/amd64 -t "$tag" "$EXT_REPO_DIR"
   echo "Built extension image: $tag"
 }
 

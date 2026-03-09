@@ -45,3 +45,15 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:${{ github.ref_name }}
             ${{ env.IMAGE }}:latest
+
+      - name: Dispatch talos-images rebuild
+        env:
+          GH_TOKEN: ${{ secrets.TALOS_IMAGES_DISPATCH_TOKEN }}
+        run: |
+          gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            /repos/syscode-labs/talos-images/dispatches \
+            -f event_type="firecracker-release" \
+            -f "client_payload[firecracker_version]=${{ github.ref_name }}"
+        continue-on-error: true

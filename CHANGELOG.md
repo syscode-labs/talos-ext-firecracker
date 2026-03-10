@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.10.1](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.10.0...talos-ext-firecracker-v1.10.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* **ci:** revert dispatch to send tag only not full image ref ([97c54ac](https://github.com/syscode-labs/talos-ext-firecracker/commit/97c54ac07d9644dc641c75f6dd53c95c6fbb5124))
+* **ci:** send full image ref in dispatch payload; strip tag prefix ([78e9ee0](https://github.com/syscode-labs/talos-ext-firecracker/commit/78e9ee0424d35f90b7637a534e00f0eed1b77afb))
+* use full semver in Talos compatibility constraint (&gt;=1.7.0) ([938ec04](https://github.com/syscode-labs/talos-ext-firecracker/commit/938ec04e43910cedadd80880e0c40151d8740c05))
+
 ## [1.10.0](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.9.0...talos-ext-firecracker-v1.10.0) (2026-03-10)
 
 

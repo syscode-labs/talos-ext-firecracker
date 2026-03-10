@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v*"
+      - "talos-ext-firecracker-v*"
 
 env:
   REGISTRY: ghcr.io

@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.11.0...talos-ext-firecracker-v1.11.1) (2026-03-16)
+
+
+### Bug Fixes
+
+* **ci:** bump actions to Node.js 24 compatible versions ([a23e21c](https://github.com/syscode-labs/talos-ext-firecracker/commit/a23e21cd73618aaf74fe15edb2caf6f5aa075c14))
+
 ## [1.11.0](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.10.1...talos-ext-firecracker-v1.11.0) (2026-03-16)
 
 

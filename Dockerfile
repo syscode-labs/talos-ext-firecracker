@@ -2,9 +2,9 @@
 # Talos system extension: packages Firecracker + Jailer for Talos Linux nodes.
 # Ref: https://www.talos.dev/latest/talos-guides/configuration/system-extensions/
 
-ARG FIRECRACKER_VERSION=v1.9.0
-ARG FIRECRACKER_SHA256_X86_64=95c13740c7ca1a6dfb40e0f51cd0a9eefee1f223cd2c3538755d03c3a9ba5237
-ARG FIRECRACKER_SHA256_AARCH64=c5564e76dec2b8e8092c52f0f8a4c5f45cf31791e95a9302f4360a771df78f69
+ARG FIRECRACKER_VERSION=v1.15.0
+ARG FIRECRACKER_SHA256_X86_64=00cadf7f21e709e939dc0c8d16e2d2ce7b975a62bec6c50f74b421cc8ab3cab4
+ARG FIRECRACKER_SHA256_AARCH64=58325e6c3c539482a412ec0b60e6f539c3320adebcf8179c7629d06736aee0bd
 
 # -- download stage -----------------------------------------------------------
 FROM --platform=${BUILDPLATFORM} alpine:3.21 AS download

@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       packages: write
+      contents: write
 
     steps:
       - # v4.3.1
@@ -46,6 +47,15 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:${{ github.ref_name }}
             ${{ env.IMAGE }}:latest
+
+      - name: Publish GitHub release (undraft)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release edit "${{ github.ref_name }}" \
+            --repo "${{ github.repository }}" \
+            --draft=false
+        continue-on-error: true
 
       - name: Dispatch talos-images rebuild
         env:

@@ -5,6 +5,7 @@
       "release-type": "simple",
       "package-name": "talos-ext-firecracker",
       "include-v-in-tag": true,
+      "draft": false,
       "changelog-path": "CHANGELOG.md",
       "extra-files": [
         {

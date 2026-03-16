@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.0](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.10.1...talos-ext-firecracker-v1.11.0) (2026-03-16)
+
+
+### Features
+
+* Firecracker v1.15.0, fix CI gitleaks, undraft releases on publish ([ac535c1](https://github.com/syscode-labs/talos-ext-firecracker/commit/ac535c1b5d9e0ce22274028f52a4ed0137dc45aa))
+
 ## [1.10.1](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.10.0...talos-ext-firecracker-v1.10.1) (2026-03-10)
 
 

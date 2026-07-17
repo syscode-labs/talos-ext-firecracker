@@ -22,6 +22,7 @@ In plain terms: it gives a Talos node the Firecracker binaries so that higher-le
 2. Verifies tarball checksums before extracting
 3. Packages binaries into a Talos extension image
 4. Publishes multi-arch images to GHCR on tagged releases
+5. Signs the pushed image digest recursively with Cosign so Image Factory can verify it
 
 ## How Release Flow Works
 
@@ -32,8 +33,19 @@ flowchart LR
   C --> D[You review and merge release PR]
   D --> E[Tag created]
   E --> F[Publish workflow]
-  F --> G[GHCR image + GitHub Release]
+  F --> G[GHCR image + Cosign signature + GitHub Release]
 ```
+
+## Release Secrets
+
+The publish workflow needs these repository secrets:
+
+- `COSIGN_PRIVATE_KEY`: private key from `cosign generate-key-pair`
+- `COSIGN_PASSWORD`: password for the private key, or empty string if generated without one
+- `TALOS_IMAGES_DISPATCH_TOKEN`: existing token used to trigger `talos-images`
+
+Mount the matching `cosign.pub` into Image Factory as
+`OMNI_IMAGE_FACTORY_COSIGN_PUBLIC_KEY_FILE`.
 
 ## Quick Start
 

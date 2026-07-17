@@ -37,7 +37,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Validate Cosign signing secret
+        env:
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+        run: |
+          test -n "${COSIGN_PRIVATE_KEY}" || {
+            echo "COSIGN_PRIVATE_KEY repository secret is required" >&2
+            exit 1
+          }
+          test -n "${COSIGN_PASSWORD}" || {
+            echo "COSIGN_PASSWORD repository secret is required" >&2
+            exit 1
+          }
+
       - name: Build and push extension image
+        id: build
         # v7.0.0
         uses: docker/build-push-action@d08e5c354a6adb9ed34480a06d141179aa583294
         with:
@@ -47,6 +62,22 @@ jobs:
           tags: |
             ${{ env.IMAGE }}:${{ github.ref_name }}
             ${{ env.IMAGE }}:latest
+
+      - name: Install Cosign
+        # v4.1.2
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6
+
+      - name: Sign extension image
+        env:
+          COSIGN_PRIVATE_KEY: ${{ secrets.COSIGN_PRIVATE_KEY }}
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+          IMAGE_DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          cosign sign \
+            --yes \
+            --recursive \
+            --key env://COSIGN_PRIVATE_KEY \
+            "${IMAGE}@${IMAGE_DIGEST}"
 
       - name: Publish GitHub release (undraft)
         env:

@@ -5,10 +5,17 @@ on:
     tags:
       - "v*"
       - "talos-ext-firecracker-v*"
+  workflow_dispatch:
+    inputs:
+      ref_name:
+        description: "Release tag to publish"
+        required: true
+        type: string
 
 env:
   REGISTRY: ghcr.io
   IMAGE: ghcr.io/syscode-labs/talos-ext-firecracker
+  RELEASE_REF_NAME: ${{ github.event.inputs.ref_name || github.ref_name }}
 
 jobs:
   publish:
@@ -60,7 +67,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ${{ env.IMAGE }}:${{ github.ref_name }}
+            ${{ env.IMAGE }}:${{ env.RELEASE_REF_NAME }}
             ${{ env.IMAGE }}:latest
 
       - name: Install Cosign
@@ -83,7 +90,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release edit "${{ github.ref_name }}" \
+          gh release edit "${RELEASE_REF_NAME}" \
             --repo "${{ github.repository }}" \
             --draft=false
         continue-on-error: true
@@ -97,5 +104,5 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             /repos/syscode-labs/talos-images/dispatches \
             -f event_type="firecracker-release" \
-            -f "client_payload[firecracker_version]=${{ github.ref_name }}"
+            -f "client_payload[firecracker_version]=${RELEASE_REF_NAME}"
         continue-on-error: true

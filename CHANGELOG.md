@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.2](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.11.1...talos-ext-firecracker-v1.11.2) (2026-07-17)
+
+
+### Miscellaneous
+
+* sign extension image with cosign ([a634174](https://github.com/syscode-labs/talos-ext-firecracker/commit/a6341745cfc85ea05cb7d45a3fa649715b70e595))
+
 ## [1.11.1](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.11.0...talos-ext-firecracker-v1.11.1) (2026-03-16)
 
 

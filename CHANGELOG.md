@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.3](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.11.2...talos-ext-firecracker-v1.11.3) (2026-07-17)
+
+
+### Miscellaneous
+
+* allow manual publish dispatch ([dd10ffb](https://github.com/syscode-labs/talos-ext-firecracker/commit/dd10ffbda76f99bee8ab5da018db983bc2e026ca))
+
 ## [1.11.2](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.11.1...talos-ext-firecracker-v1.11.2) (2026-07-17)
 
 

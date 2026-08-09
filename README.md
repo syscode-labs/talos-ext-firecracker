@@ -47,6 +47,11 @@ The publish workflow needs these repository secrets:
 Mount the matching `cosign.pub` into Image Factory as
 `OMNI_IMAGE_FACTORY_COSIGN_PUBLIC_KEY_FILE`.
 
+When rotating `COSIGN_PRIVATE_KEY`, rotate the Image Factory public key in the
+same change and retire all previously published GHCR tags before releasing the
+next version. This prevents the factory from accepting artifacts signed by the
+retired key.
+
 ## Quick Start
 
 Build locally:
@@ -75,7 +80,6 @@ pre-commit install --hook-type commit-msg
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml): lint/build checks
 - [`.github/workflows/release-please.yml`](.github/workflows/release-please.yml): automated release PRs
 - [`.github/workflows/release.yml`](.github/workflows/release.yml): publish on tags
-- [`docs/release-process.md`](docs/release-process.md): release policy notes
 
 ## Links
 

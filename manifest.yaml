@@ -3,7 +3,7 @@ metadata:
   name: firecracker
   version: 1.12.0
   author: syscode-labs
-  description: Firecracker microVM and Jailer binaries for Talos Linux
+  description: Firecracker microVM, Jailer, and pinned Imp guest vmlinux for Talos Linux
   compatibility:
     talos:
       version: '>= 1.7.0'

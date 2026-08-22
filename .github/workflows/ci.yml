@@ -23,6 +23,9 @@ jobs:
           curl -sfL "https://github.com/gitleaks/gitleaks/releases/download/${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION#v}_linux_x64.tar.gz" \
             | tar -xz -C /usr/local/bin gitleaks
 
+      - name: Verify extension pins and paths
+        run: ./hack/verify.sh
+
       - name: Gitleaks secret scan
         run: gitleaks detect --source . --redact
 

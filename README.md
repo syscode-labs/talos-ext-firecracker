@@ -5,7 +5,7 @@
 [![Publish](https://github.com/syscode-labs/talos-ext-firecracker/actions/workflows/release.yml/badge.svg)](https://github.com/syscode-labs/talos-ext-firecracker/actions/workflows/release.yml)
 [![GHCR](https://img.shields.io/badge/registry-ghcr.io-blue)](https://ghcr.io/syscode-labs/talos-ext-firecracker)
 [![Talos](https://img.shields.io/badge/talos-%3E%3D1.7-0f62fe)](https://www.talos.dev/)
-[![Firecracker](https://img.shields.io/badge/firecracker-v1.9.0-orange)](https://github.com/firecracker-microvm/firecracker/releases/tag/v1.9.0)
+[![Firecracker](https://img.shields.io/badge/firecracker-v1.15.0-orange)](https://github.com/firecracker-microvm/firecracker/releases/tag/v1.15.0)
 [![Platforms](https://img.shields.io/badge/platforms-amd64%20%7C%20arm64-brightgreen)](#)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](https://www.apache.org/licenses/LICENSE-2.0)
 
@@ -13,14 +13,15 @@ This repo builds a **Talos system extension** that adds:
 
 - `firecracker`
 - `jailer`
+- `/usr/local/share/imp/vmlinux` (Firecracker CI guest kernel, `6.1.155`)
 
 In plain terms: it gives a Talos node the Firecracker binaries so that higher-level systems can start lightweight microVMs.
 
 ## What This Does
 
-1. Downloads Firecracker release tarballs for `amd64` and `arm64`
-2. Verifies tarball checksums before extracting
-3. Packages binaries into a Talos extension image
+1. Downloads Firecracker release tarballs and the pinned Firecracker CI guest kernel for `amd64` and `arm64`
+2. Verifies all artifact checksums before installing them
+3. Packages Firecracker, Jailer, and the Imp guest kernel into a Talos extension image
 4. Publishes multi-arch images to GHCR on tagged releases
 5. Signs the pushed image digest recursively with Cosign so Image Factory can verify it
 
@@ -54,6 +55,19 @@ retired key.
 
 ## Quick Start
 
+## Use With Imp
+
+The Imp Helm chart must mount the kernel installed by this extension:
+
+```yaml
+agent:
+  env:
+    kernelPath: /usr/local/share/imp/vmlinux
+```
+
+This path is Talos-specific. Local and Kind-based Imp tests provision their own
+kernel at `/var/lib/imp/vmlinux` and should retain that configuration.
+
 Build locally:
 
 ```bash
@@ -63,6 +77,7 @@ docker buildx build --platform linux/amd64,linux/arm64 -t talos-ext-firecracker:
 Run local checks:
 
 ```bash
+./hack/verify.sh
 pre-commit run --all-files
 ```
 
@@ -75,8 +90,9 @@ pre-commit install --hook-type commit-msg
 
 ## Key Files
 
-- [`Dockerfile`](Dockerfile): downloads, verifies, and installs Firecracker binaries
+- [`Dockerfile`](Dockerfile): downloads, verifies, and installs Firecracker, Jailer, and the pinned Imp guest kernel
 - [`manifest.yaml`](manifest.yaml): Talos extension metadata
+- [`hack/verify.sh`](hack/verify.sh): validates artifact pins and installed paths
 - [`.github/workflows/ci.yml`](.github/workflows/ci.yml): lint/build checks
 - [`.github/workflows/release-please.yml`](.github/workflows/release-please.yml): automated release PRs
 - [`.github/workflows/release.yml`](.github/workflows/release.yml): publish on tags

@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.0](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.12.0...talos-ext-firecracker-v1.13.0) (2026-08-22)
+
+
+### Features
+
+* bundle Imp guest kernel ([4a74ead](https://github.com/syscode-labs/talos-ext-firecracker/commit/4a74ead114efe19410723b0c80dcd1fa0d3874f5))
+* bundle Imp guest kernel ([6d0ed29](https://github.com/syscode-labs/talos-ext-firecracker/commit/6d0ed291ad45af722395fb6a5d25fc8ca6f3c2cc))
+
 ## [1.12.0](https://github.com/syscode-labs/talos-ext-firecracker/compare/talos-ext-firecracker-v1.11.3...talos-ext-firecracker-v1.12.0) (2026-08-09)
 
 
